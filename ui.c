@@ -58,9 +58,9 @@ static void activate(GtkApplication *app, gpointer user_data)
 	/** GtkWidget *mean_label; */
 	/** GtkWidget *flowbox; */
 
-	for(int i=0;ws->meaning[i];i++){
-		if(ws->meaning[i]==':')
-			ws->meaning[i]=' ';
+	for (int i = 0; ws->meaning[i]; i++) {
+		if (ws->meaning[i] == ':')
+			ws->meaning[i] = ' ';
 	}
 	window = gtk_application_window_new(app);
 	gtk_window_set_title(GTK_WINDOW(window), ws->word_m);
@@ -78,15 +78,15 @@ static void activate(GtkApplication *app, gpointer user_data)
 	markup(word_label, ws);
 	/** system("xdg-open \"http://dict.cn/http\""); */
 	box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
-	gtk_box_pack_start(GTK_BOX(box), word_label, FALSE, FALSE,0);
+	gtk_box_pack_start(GTK_BOX(box), word_label, FALSE, FALSE, 0);
 #ifdef URLBTN
-	char url[sizeof(DICTCN)+strlen(ws->word_m)];
-	memcpy(url,DICTCN, DICTCNSZ);
-	strcpy(url+DICTCNSZ-1, ws->word_m);
-	url_btn= gtk_link_button_new(ws->word_m);
-	printf("url:%s\n",url);
-	gtk_link_button_set_uri(GTK_LINK_BUTTON(url_btn),url);
-	gtk_box_pack_start(GTK_BOX(box), url_btn, FALSE, FALSE,0);
+	char url[sizeof(DICTCN) + strlen(ws->word_m)];
+	memcpy(url, DICTCN, DICTCNSZ);
+	strcpy(url + DICTCNSZ - 1, ws->word_m);
+	url_btn = gtk_link_button_new(ws->word_m);
+	printf("url:%s\n", url);
+	gtk_link_button_set_uri(GTK_LINK_BUTTON(url_btn), url);
+	gtk_box_pack_start(GTK_BOX(box), url_btn, FALSE, FALSE, 0);
 #endif
 	gtk_container_add(GTK_CONTAINER(window), box);
 	gtk_widget_show_all(window);
@@ -103,9 +103,10 @@ int main(int argc, char **argv)
 		return -1;
 	word_storage_t *ws = get_ws(word);
 	if (!ws) {
-		printf("word:%s\n",word);
+		printf("word:%s\n", word);
 		return -1;
 	}
+	printf("original word:%s, ws->word:%s\n", word, ws->word_m);
 
 	iret = pthread_create(&voice_thread, NULL, (void(*))ws_voice,
 			      (void *)ws);

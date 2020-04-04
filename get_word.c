@@ -330,15 +330,16 @@ char *get_selected_word()
 		free(word);
 		return NULL;
 	}
-	int len = strlen(word);
 	char *b, *e;
 	b = word;
 	while (*b && !isalpha(*b))
 		++b;
 	e = b;
 	b = word;
-	while (*e && isalpha(*e))
+	while (*e && isalpha(*e)){
+		*e=tolower(*e);
 		*(b++) = *(e++);
+	}
 	*b = '\0';
 	DEBUG_INFO("word:%s", word);
 	if (strlen(word)) {
