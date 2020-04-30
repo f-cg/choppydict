@@ -1,3 +1,4 @@
+#include "gdk/gdkkeysyms.h"
 #include "storage.h"
 #include <pthread.h>
 #include <gtk/gtk.h>
@@ -26,6 +27,14 @@ void markup(GtkWidget *word_label, word_storage_t *ws)
 	}
 	gtk_label_set_markup(GTK_LABEL(word_label), markup);
 	g_free(markup);
+}
+void on_key_press(GtkWidget *widget, GdkEventKey *event, gpointer user_data)
+{
+	switch (event->keyval) {
+	case GDK_KEY_Q:
+	case GDK_KEY_q:
+		exit(0);
+	}
 }
 
 static void activate(GtkApplication *app, gpointer user_data)
@@ -70,6 +79,8 @@ static void activate(GtkApplication *app, gpointer user_data)
 	// 设置窗口位置在鼠标指针处
 	gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_MOUSE);
 	gtk_window_set_keep_above(GTK_WINDOW(window), 1);
+	g_signal_connect(G_OBJECT(window), "key_press_event",
+			 G_CALLBACK(on_key_press), NULL);
 
 	word_label = gtk_label_new(ws->word_m);
 	/** gtk_label_set_markup(GTK_LABEL(word_label), meaning); */
