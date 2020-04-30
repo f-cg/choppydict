@@ -353,9 +353,6 @@ void ws_voice(word_storage_t *ws)
 {
 	voice(ws->sound1_m, ws->sound1_len);
 	voice(ws->sound2_m, ws->sound2_len);
-	FILE *fp = fopen("a.mp3", "w");
-	fwrite(ws->sound1_m, ws->sound1_len, 1, fp);
-	fclose(fp);
 }
 
 void ws_desc(word_storage_t *ws)
